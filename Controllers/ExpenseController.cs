@@ -1,8 +1,4 @@
 
-
-
-
-
 namespace ExpenseTracker.AddControllersWithViews
 {
   public class ExpenseController : Controller
