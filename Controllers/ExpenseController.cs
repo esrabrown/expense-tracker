@@ -136,6 +136,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using System.Threading.Tasks;
 using ExpenseTracker.Models;
 
 namespace ExpenseTracker.Controllers
@@ -168,6 +169,7 @@ namespace ExpenseTracker.Controllers
             {
                 _context.Expenses.Add(expense);
                 await _context.SaveChangesAsync();
+                // _context.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
 
