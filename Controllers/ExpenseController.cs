@@ -166,9 +166,9 @@ namespace ExpenseTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(expense);
+                _context.Expenses.Add(expense);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
 
             return View(expense);
