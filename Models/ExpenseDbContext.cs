@@ -9,5 +9,10 @@ namespace ExpenseTracker.Models
         }
 
         public DbSet<Expense> Expenses { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+        }
     }
 }
