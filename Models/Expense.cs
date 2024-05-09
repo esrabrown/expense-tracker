@@ -18,4 +18,5 @@ namespace ExpenseTracker.Models
 
         public DateTime Date { get; set; }
     }
+
 }
