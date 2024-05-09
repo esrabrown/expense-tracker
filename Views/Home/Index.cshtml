@@ -1,4 +1,4 @@
-@* @{
+@{
 	ViewData["Title"] = "Home Page";
 }
 
@@ -10,44 +10,5 @@
 	 <h2>Welcome </h2>
 
 </div>
-
-<a asp-controller="Expense" asp-action="Create">Create New Expense</a> *@
-
-@model IEnumerable<ExpenseTracker.Models.Expense>
-
-
-@if (Model != null && Model.Any())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Description</th>
-                <th>Amount</th>
-                <th>Date</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-               <tr>
-                <td>@Html.DisplayFor(modelItem => item.Id) </td>
-                <td>@Html.DisplayFor(modelItem => item.Amount)</td>
-                <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                <td>
-                    @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-               </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>No expenses found.</p>
-}
 
 <a asp-controller="Expense" asp-action="Create">Create New Expense</a>
