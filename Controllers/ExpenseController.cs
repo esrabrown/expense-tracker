@@ -37,9 +37,6 @@ namespace ExpenseTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                // _context.Expenses.Add(expense);
-                // await _context.SaveChangesAsync();
-                // return RedirectToAction("Index", "Home");
                 expense.Date = DateTime.Now;
                 _context.Expenses.Add(expense);
                 await _context.SaveChangesAsync();
@@ -71,7 +68,7 @@ namespace ExpenseTracker.Controllers
         {
             if (id != expense.Id)
             {
-                return BadRequest(); // Return a 400 Bad Request if Ids don't match
+                return BadRequest();
             }
 
             if (ModelState.IsValid)
@@ -120,7 +117,7 @@ namespace ExpenseTracker.Controllers
             var expense = await _context.Expenses.FindAsync(id);
             if (expense == null)
             {
-                return NotFound(); // Return a 404 Not Found if expense with the given ID is not found
+                return NotFound();
             }
 
             _context.Expenses.Remove(expense);
