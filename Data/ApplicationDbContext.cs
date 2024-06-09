@@ -9,8 +9,6 @@ namespace ExpenseTracker.Data
         {
         }
 
-        // Define your DbSet properties here for each entity you want to include in the database
-        // Example:
-        // public DbSet<User> Users { get; set; }
+
     }
 }

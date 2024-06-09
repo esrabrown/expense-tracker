@@ -82,11 +82,11 @@ namespace ExpenseTracker.Controllers
                 {
                     if (!_context.Expenses.Any(e => e.Id == id))
                     {
-                        return NotFound(); // Return a 404 Not Found if expense with the given ID is not found
+                        return NotFound();
                     }
                     else
                     {
-                        throw; // Handle other exceptions
+                        throw;
                     }
                 }
                 return RedirectToAction(nameof(Index));
