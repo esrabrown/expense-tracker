@@ -9,6 +9,6 @@ namespace ExpenseTracker.Data
         {
         }
 
-
+        // public DbSet<Expense> Expenses { get; set; }
     }
 }
