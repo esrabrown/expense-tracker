@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Threading.Tasks;
 using ExpenseTracker.Models;
+using Microsoft.AspNetCore.Authorization;
+using ExpenseTracker.Data;
+
 
 namespace ExpenseTracker.Controllers
 {
+    [Authorize]
     public class ExpenseController : Controller
     {
         private readonly ExpenseDbContext _context;

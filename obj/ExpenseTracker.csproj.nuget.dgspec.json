@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/esracoskun/ExpenseTracker/ExpenseTracker.csproj": {}
+    "/Users/esracoskun/Desktop/expense-tracker/ExpenseTracker.csproj": {}
   },
   "projects": {
-    "/Users/esracoskun/ExpenseTracker/ExpenseTracker.csproj": {
+    "/Users/esracoskun/Desktop/expense-tracker/ExpenseTracker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/esracoskun/ExpenseTracker/ExpenseTracker.csproj",
+        "projectUniqueName": "/Users/esracoskun/Desktop/expense-tracker/ExpenseTracker.csproj",
         "projectName": "ExpenseTracker",
-        "projectPath": "/Users/esracoskun/ExpenseTracker/ExpenseTracker.csproj",
+        "projectPath": "/Users/esracoskun/Desktop/expense-tracker/ExpenseTracker.csproj",
         "packagesPath": "/Users/esracoskun/.nuget/packages/",
-        "outputPath": "/Users/esracoskun/ExpenseTracker/obj/",
+        "outputPath": "/Users/esracoskun/Desktop/expense-tracker/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/esracoskun/.nuget/NuGet/NuGet.Config"

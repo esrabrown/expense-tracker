@@ -5,18 +5,17 @@ using ExpenseTracker.Models;
 
 namespace ExpenseTracker.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
 
-        public DbSet<Expense> Expenses { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
-    // protected override void OnModelCreating(ModelBuilder modelBuilder)
-    // {
-
-    //     base.OnModelCreating(modelBuilder);
+        public DbSet<Expense> Expenses { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+           base.OnModelCreating(modelBuilder);
 
     //     // modelBuilder.Entity<Expense>()
     //     // .HasOne(p => p.Description)
@@ -26,6 +25,6 @@ namespace ExpenseTracker.Data
     //     .Property(p => p.Amount)
     //     .IsRequired();
 
-    // }
+        }
     }
 }

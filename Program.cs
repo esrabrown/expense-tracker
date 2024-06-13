@@ -8,15 +8,18 @@ using System;
 using System.Net;
 using ExpenseTracker.Models;
 using Microsoft.AspNetCore.Identity;
+using ExpenseTracker.Data;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
+//var connectionString = builder.Configuration.GetConnectionString("ExpenseDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ExpenseDbContextConnection' not found.");
 
 // Define connection string and server version
 var connectionString = "server=localhost;user=expensetracker;password=expensetracker123;database=expense_tracker";
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 32));
 
-builder.Services.AddDbContext<ExpenseDbContext>(dbContextOptions =>
+builder.Services.AddDbContext<ApplicationDbContext>(dbContextOptions =>
     dbContextOptions.UseMySql(connectionString, serverVersion));
 
 
@@ -29,7 +32,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>
    options.Password.RequireNonAlphanumeric = false;
    options.Password.RequireUppercase = true;
    options.Password.RequireLowercase = false;
-}).AddEntityFrameworkStores<ExpenseDbContext>();
+}).AddEntityFrameworkStores<ApplicationDbContext>();
 
 
 // Add services to the container.

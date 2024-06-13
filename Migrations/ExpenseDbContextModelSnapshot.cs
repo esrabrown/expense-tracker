@@ -4,6 +4,8 @@ using ExpenseTracker.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using ExpenseTracker.Data;
+
 
 #nullable disable
 

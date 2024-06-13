@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "47FcccgpX5lSkO/Fc4J8f+3pIjNm7/Y3qBIY+A4vz6bZSG1lHAR1UueDnN1XdHJEgTBj5X31BRv4Zuw8FtIgJA==",
+  "dgSpecHash": "iBQ4YLzNUpgzpQvmCVqZHLK1f31RlI8Vs8ZRsRUeSfpuBwgzNsEcOTNIWcJeAGQK9FPfXftuHsXJCLbtnPGs+g==",
   "success": true,
-  "projectFilePath": "/Users/esracoskun/ExpenseTracker/ExpenseTracker.csproj",
+  "projectFilePath": "/Users/esracoskun/Desktop/expense-tracker/ExpenseTracker.csproj",
   "expectedPackageFiles": [
     "/Users/esracoskun/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/Users/esracoskun/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",
