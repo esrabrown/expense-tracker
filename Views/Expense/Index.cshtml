@@ -20,8 +20,6 @@
                 <td>@Html.DisplayFor(modelItem => item.Amount)</td>
                 <td>@Html.DisplayFor(modelItem => item.Date)</td>
                 <td>
-                    @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
@@ -38,3 +36,5 @@ else
 }
 
 <a asp-controller="Expense" asp-action="Create">Create New Expense</a>
+
+<a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back to Home</a>

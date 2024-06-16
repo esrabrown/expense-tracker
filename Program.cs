@@ -55,9 +55,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 // builder.Services.AddRazorPages();
-app.UseAuthentication();
+
 app.MapRazorPages();
 // app.MapControllers();
 

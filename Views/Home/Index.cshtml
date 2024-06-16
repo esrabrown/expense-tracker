@@ -1,3 +1,9 @@
+@* @using Microsoft.AspNetCore.Identity
+@using ExpenseTracker.Data;
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
 @{
 	ViewData["Title"] = "Home Page";
 }
@@ -11,4 +17,47 @@
 
 </div>
 
+        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login">
+            <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
+        </form>
+
+<li class="nav-item">
+    <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+</li>
+
 <a asp-controller="Expense" asp-action="Create">Create New Expense</a>
+ *@
+
+@using Microsoft.AspNetCore.Identity
+@using ExpenseTracker.Data;
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Home Page";
+    var isAuthenticated = User.Identity.IsAuthenticated;
+    var userName = isAuthenticated ? UserManager.GetUserName(User) : "";
+}
+
+<div class="text-center">
+    <h2>Welcome @userName</h2>
+</div>
+
+@if (!isAuthenticated)
+{
+<form id="loginForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
+        <button id="login" type="submit" class="btn btn-primary" >Login</button>
+    </form>
+}
+else
+{
+    <div>
+        <p>Hello @userName!</p>
+        <a asp-controller="Expense" asp-action="Create" class="btn btn-primary">Create New Expense</a>
+    </div>
+
+    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
+        <button id="logout" type="submit" class="btn btn-link text-dark border-0">Logout</button>
+    </form>
+}
