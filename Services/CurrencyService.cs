@@ -7,13 +7,12 @@ namespace ExpenseTracker.Services
     public class CurrencyService
     {
         private static readonly HttpClient client = new HttpClient();
-        private const string apiKey = "450670e6ca4ca1f1ea5bec32ea1a9399";
-        private const string apiUrl = "http://api.exchangeratesapi.io/v1/latest";
-
+        private const string apiUrl = "https://api.frankfurter.app/latest";
 
         public async Task<decimal> GetExchangeRate(string baseCurrency, string targetCurrency)
         {
-            var url = $"{apiUrl}?access_key={apiKey}&base={baseCurrency}&symbols={targetCurrency}";
+            var url = $"{apiUrl}?amount=1&from={baseCurrency}&to={targetCurrency}";
+
             var response = await client.GetAsync(url);
 
             if (!response.IsSuccessStatusCode)
@@ -24,13 +23,9 @@ namespace ExpenseTracker.Services
             var responseString = await response.Content.ReadAsStringAsync();
             dynamic data = JObject.Parse(responseString);
 
-            if (data.rates == null || data.rates[targetCurrency] == null)
-            {
-                throw new HttpRequestException($"Error fetching exchange rates: Invalid response format.");
-            }
+            decimal rate = data.rates[targetCurrency];
 
-            return data.rates[targetCurrency];
+            return rate;
         }
     }
 }
-

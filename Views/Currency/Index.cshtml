@@ -1,64 +1,3 @@
-@* 
-@using Microsoft.AspNetCore.Mvc.RazorPages
-
-@{
-    ViewData["Title"] = "Currency Exchange Rate";
-}
-
-<h2>@ViewData["Title"]</h2>
-
-<form method="post" asp-action="GetExchangeRate" asp-controller="Currency">
-    <div>
-        <label for="baseCurrency">Base Currency:</label>
-        <input type="text" id="baseCurrency" name="baseCurrency" required />
-    </div>
-    <div>
-        <label for="targetCurrency">Target Currency:</label>
-        <input type="text" id="targetCurrency" name="targetCurrency" required />
-    </div>
-    <button type="submit">Get Exchange Rate</button>
-</form>
-
-@if (ViewBag.ExchangeRate != null)
-{
-    <div>
-        <p>Exchange rate from @ViewBag.BaseCurrency to @ViewBag.TargetCurrency is: @ViewBag.ExchangeRate</p>
-    </div>
-} *@
-
-
-@using Microsoft.AspNetCore.Mvc.RazorPages
-
-@* @{
-    ViewData["Title"] = "Currency Conversion";
-}
-
-<h2>Currency Conversion</h2>
-
-<form method="get" asp-action="Convert">
-    <div>
-        <label>Amount:</label>
-        <input type="number" step="0.01" name="amount" required />
-    </div>
-    <div>
-        <label>Base Currency:</label>
-        <input type="text" name="baseCurrency" value="USD" required />
-    </div>
-    <div>
-        <label>Target Currency:</label>
-        <input type="text" name="targetCurrency" value="EUR" required />
-    </div>
-    <button type="submit">Convert</button>
-</form>
-
-@if (ViewBag.ConvertedAmount != null)
-{
-    <div>
-        <p>@ViewBag.Amount @ViewBag.BaseCurrency is @ViewBag.ConvertedAmount @ViewBag.TargetCurrency</p>
-    </div>
-} *@
-
-
 @{
     ViewData["Title"] = "Currency Exchange Rates";
     var currencies = ViewBag.Currencies as List<string>;
@@ -77,37 +16,28 @@
             }
         </select>
     </div>
-    <div>
+    <br>
+    @* <div>
         <label for="targetCurrency">Target Currency:</label>
-        <select type="targetCurrency" name="targetCurrency" required />
-         @foreach (var currency in currencies)
+        <select id="targetCurrency" name="targetCurrency" required>
+            @foreach (var currency in currencies)
             {
                 <option value="@currency">@currency</option>
             }
         </select>
-    </div>
+    </div> *@
     <button type="submit">Get Exchange Rates</button>
 </form>
+<br>
 
-@* @if (exchangeRates != null)
-{
-    <div>
-        <h3>Exchange Rates for @ViewBag.BaseCurrency</h3>
-        <ul>
-            @foreach (var rate in exchangeRates)
-            {
-                <li>@ViewBag.BaseCurrency to @rate.Key: @rate.Value</li>
-            }
-        </ul>
-    </div> *@
-    @if (ViewBag.Error != null)
+@if (ViewBag.Error != null)
 {
     <div>
         <p style="color:red;">Error: @ViewBag.Error</p>
     </div>
 }
 
-@if (exchangeRates != null)
+@if (exchangeRates != null && exchangeRates.Count > 0)
 {
     <div>
         <h3>Exchange Rates for @ViewBag.BaseCurrency</h3>
@@ -117,5 +47,11 @@
                 <li>@ViewBag.BaseCurrency to @rate.Key: @rate.Value</li>
             }
         </ul>
+    </div>
+}
+else if (exchangeRates != null && exchangeRates.Count == 0)
+{
+    <div>
+        <p>No exchange rates found for selected currencies.</p>
     </div>
 }
