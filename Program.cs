@@ -9,6 +9,7 @@ using System.Net;
 using ExpenseTracker.Models;
 using Microsoft.AspNetCore.Identity;
 using ExpenseTracker.Data;
+using ExpenseTracker.Services;
 
 
 
@@ -40,6 +41,8 @@ builder.Services.AddControllersWithViews();
 
 // Use the defined connection string and server version in AddDbContext
 builder.Services.AddDbContext<ExpenseDbContext>(dbContextOptions => dbContextOptions.UseMySql(connectionString, serverVersion));
+
+builder.Services.AddScoped<CurrencyService>();
 
 var app = builder.Build();
 
