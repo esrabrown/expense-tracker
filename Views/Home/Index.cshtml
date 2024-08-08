@@ -23,7 +23,7 @@
     </div>
 
 
-    <div class="text-right">
+    <div class="d-flex justify-content-end">
     <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post" class="ml-auto">
         <button id="logout" type="submit" class="btn btn-link text-dark border-0">Logout</button>
     </form>
@@ -32,10 +32,15 @@
 }
 else
 {
-    <div class="text-right">
-        <form id="loginForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
-            <button id="login" type="submit" class="btn btn-primary" >Login</button>
-        </form>
+
+    <div class="text-center">
+        <p><b>Not logged in, please log in to continue</b></p>
+        <div>
+            <form id="loginForm" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="~/Identity/Account/Login" method="post">
+                <button id="login" type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
     </div>
+
 }
 
