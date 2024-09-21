@@ -46,3 +46,13 @@ button.accept-policy[b-126ttedj4m] {
   white-space: nowrap;
   line-height: 60px;
 }
+
+.card.text-center[b-126ttedj4m] {
+  margin-bottom: 20px !important; /* Using !important to ensure it applies */
+}
+
+.card-header[b-126ttedj4m] {
+  background-color: #007bff !important;
+  color: white !important;
+}
+

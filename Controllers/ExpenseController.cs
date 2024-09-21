@@ -24,11 +24,40 @@ namespace ExpenseTracker.Controllers
         }
 
         // GET: /expenses
+        // public async Task<IActionResult> Index()
+        // {
+        //     var expenses = await _context.Expenses.ToListAsync();
+        //     return View(expenses);
+        // }
+
         public async Task<IActionResult> Index()
-        {
-            var expenses = await _context.Expenses.ToListAsync();
-            return View(expenses);
-        }
+{
+    var expenses = await _context.Expenses.ToListAsync();
+
+    // Calculate total expenses for this week
+    var startOfWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
+    var totalThisWeek = expenses.Where(e => e.Date >= startOfWeek).Sum(e => e.Amount);
+
+    // Calculate total expenses for this month
+    var startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+    var totalThisMonth = expenses.Where(e => e.Date >= startOfMonth).Sum(e => e.Amount);
+
+    // Calculate total expenses for this year
+    var startOfYear = new DateTime(DateTime.Now.Year, 1, 1);
+    var totalThisYear = expenses.Where(e => e.Date >= startOfYear).Sum(e => e.Amount);
+
+    // Create the ViewModel
+    var viewModel = new ExpenseSummary
+    {
+        Expenses = expenses,
+        TotalThisWeek = totalThisWeek,
+        TotalThisMonth = totalThisMonth,
+        TotalThisYear = totalThisYear
+    };
+
+    return View(viewModel);
+}
+
 
         [HttpGet]
         public IActionResult Create()

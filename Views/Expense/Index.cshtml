@@ -1,7 +1,44 @@
-﻿@model IEnumerable<ExpenseTracker.Models.Expense>
+﻿@model ExpenseTracker.Models.ExpenseSummary
 
+<div class="container mt-4">
+    <h2>Expense Summary</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-center" style="margin-bottom: 20px; border: 1px solid #007bff;">
+                <div class="card-header" style="background-color: #007bff; color: white;">
+                    Total This Week
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.TotalThisWeek.ToString("C")</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center" style="margin-bottom: 20px; border: 1px solid #007bff;">
+                <div class="card-header" style="background-color: #007bff; color: white;">
+                    Total This Month
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.TotalThisMonth.ToString("C")</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center" style="margin-bottom: 20px; border: 1px solid #007bff;">
+                <div class="card-header" style="background-color: #007bff; color: white;">
+                    Total This Year
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.TotalThisYear.ToString("C")</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-@if (Model != null && Model.Any())
+<br>
+
+@if (Model.Expenses != null && Model.Expenses.Any())
 {
     <table class="table">
         <thead>
@@ -9,29 +46,27 @@
                 <th>Description</th>
                 <th>Amount</th>
                 <th>Date</th>
-                <th></th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Expenses)
             {
-               <tr>
-                <td>@Html.DisplayFor(modelItem => item.Description) </td>
-                <td>@Html.DisplayFor(modelItem => item.Amount)</td>
-                <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-               </tr>
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
 }
 else
 {
-    <p>Count of expenses: @Model?.Count()</p>
-
     <p>No expenses found.</p>
 }
 
