@@ -48,7 +48,7 @@ button.accept-policy {
 }
 
 .card.text-center {
-  margin-bottom: 20px !important; /* Using !important to ensure it applies */
+  margin-bottom: 20px !important;
 }
 
 .card-header {

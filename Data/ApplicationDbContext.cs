@@ -13,6 +13,8 @@ namespace ExpenseTracker.Data
         {
         }
         public DbSet<Expense> Expenses { get; set; }
+        //NOT: This property represents the collection of Expense entities in the database.
+        //Entity Framework will use this property to perform CRUD operations on the Expenses table.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
            base.OnModelCreating(modelBuilder);
