@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 @using Microsoft.AspNetCore.Identity
 @using ExpenseTracker.Data;
@@ -22,12 +23,62 @@
         <a asp-controller="Expense" asp-action="Create" class="btn btn-primary">Create New Expense</a>
     </div>
 
+<div class="container mt-4">
+        <h3>Spending Overview</h3>
+        <canvas id="spendingChart"></canvas>
+    </div>
 
-    @* <div class="d-flex justify-content-end">
-    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post" class="ml-auto">
-        <button id="logout" type="submit" class="btn btn-link text-dark border-0">Logout</button>
-    </form>
-    </div> *@
+    <script>
+        var weeklySpent = @ViewBag.WeeklySpent;
+        var monthlySpent = @ViewBag.MonthlySpent;
+        var yearlySpent = @ViewBag.YearlySpent;
+
+
+        var ctx = document.getElementById('spendingChart').getContext('2d');
+        var spendingChart = new Chart(ctx, {
+             type: 'bar',
+            data: {
+                labels: ['Weekly', 'Monthly', 'Yearly'],
+                datasets: [{
+                    label: `Total Amount Spent $${yearlySpent}`,
+                    data: [weeklySpent, monthlySpent, yearlySpent],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                    // Ensure y-axis values (numbers) are shown
+                    callback: function(value) {
+                        return '$' + value; // Format the label as currency
+                    }
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return 'Amount: $' + tooltipItem.raw;
+                    }
+                }
+            }
+        }
+    }
+});
+    </script>
 
 }
 else
