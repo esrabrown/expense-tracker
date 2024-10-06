@@ -23,27 +23,37 @@ namespace ExpenseTracker.Controllers
         }
 
         // GET: /expenses
-        // public async Task<IActionResult> Index()
-        // {
-        //     var expenses = await _context.Expenses.ToListAsync();
-        //     return View(expenses);
-        // }
-
         public async Task<IActionResult> Index()
         {
             var expenses = await _context.Expenses.ToListAsync();
 
+            // Get the current date and time
+            var now = DateTime.Now;
+
+            // Calculate the start and end of this week (Monday to Sunday)
+            var currentDay = now.DayOfWeek;
+            var daysToSubtract = (currentDay == DayOfWeek.Sunday) ? 6 : (int)currentDay - 1;
+            var startOfWeek = now.AddDays(-daysToSubtract).Date; // Monday of this week
+            var endOfWeek = startOfWeek.AddDays(7).AddTicks(-1); // End of Sunday
+
             // Calculate total expenses for this week
-            var startOfWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
-            var totalThisWeek = expenses.Where(e => e.Date >= startOfWeek).Sum(e => e.Amount);
+            var totalThisWeek = expenses
+                .Where(e => e.Date >= startOfWeek && e.Date <= endOfWeek)
+                .Sum(e => e.Amount);
 
             // Calculate total expenses for this month
-            var startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            var totalThisMonth = expenses.Where(e => e.Date >= startOfMonth).Sum(e => e.Amount);
+            var startOfMonth = new DateTime(now.Year, now.Month, 1);
+            var endOfMonth = startOfMonth.AddMonths(1).AddTicks(-1); // Last day of the current month
+            var totalThisMonth = expenses
+                .Where(e => e.Date >= startOfMonth && e.Date <= endOfMonth)
+                .Sum(e => e.Amount);
 
             // Calculate total expenses for this year
-            var startOfYear = new DateTime(DateTime.Now.Year, 1, 1);
-            var totalThisYear = expenses.Where(e => e.Date >= startOfYear).Sum(e => e.Amount);
+            var startOfYear = new DateTime(now.Year, 1, 1);
+            var endOfYear = new DateTime(now.Year, 12, 31, 23, 59, 59); // Last moment of the year
+            var totalThisYear = expenses
+                .Where(e => e.Date >= startOfYear && e.Date <= endOfYear)
+                .Sum(e => e.Amount);
 
             // Create the ViewModel
             var viewModel = new ExpenseSummary
@@ -54,8 +64,10 @@ namespace ExpenseTracker.Controllers
                 TotalThisYear = totalThisYear
             };
 
-            return View(viewModel);
+         return View(viewModel);
         }
+
+
 
 
         [HttpGet]
@@ -64,19 +76,20 @@ namespace ExpenseTracker.Controllers
             return View();
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Create(Expense expense)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Description,Amount,Date")] Expense expense)
         {
             if (ModelState.IsValid)
             {
-                expense.Date = DateTime.Now;
-                _context.Expenses.Add(expense);
+                _context.Add(expense);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Expense");
+                return RedirectToAction(nameof(Index));
             }
-
-            return View("Views/Expense/Index.cshtml");
+             return View(expense);
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)

@@ -18,29 +18,48 @@ public class HomeController : Controller
             _context = context;
     }
 
-    public IActionResult Index()
-    {
-         DateTime now = DateTime.Now;
+   public IActionResult Index()
+   {
+        DateTime now = DateTime.Now;
 
-            // Calculate weekly, monthly, and yearly spent using correct Where clauses
-            var startOfWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
-            var startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            var startOfYear = new DateTime(DateTime.Now.Year, 1, 1);
+        // Calculate the start of the week (Monday)
+        var currentDay = now.DayOfWeek;
+        var daysToSubtract = (currentDay == DayOfWeek.Sunday) ? 6 : (int)currentDay - 1;
+        var startOfWeek = now.AddDays(-daysToSubtract).Date; // Monday of this week
+        var endOfWeek = startOfWeek.AddDays(7).AddTicks(-1); // End of Sunday
 
-            // weekly, monthly, and yearly spending
-            var weeklySpent = _context.Expenses.Where(e => e.Date >= startOfWeek).Sum(e => e.Amount);
+        // Calculate the start of the month
+        var startOfMonth = new DateTime(now.Year, now.Month, 1);
+        var endOfMonth = startOfMonth.AddMonths(1).AddTicks(-1); // Last moment of the month
 
-            var monthlySpent = _context.Expenses.Where(e => e.Date >= startOfMonth).Sum(e => e.Amount);
+        // Calculate the start of the year
+        var startOfYear = new DateTime(now.Year, 1, 1);
+        var endOfYear = new DateTime(now.Year, 12, 31, 23, 59, 59); // Last moment of the year
 
-            var yearlySpent = _context.Expenses.Where(e => e.Date >= startOfYear).Sum(e => e.Amount);
+        // Calculate total spent in the week, month, and year
+        var weeklySpent = _context.Expenses
+            .Where(e => e.Date >= startOfWeek && e.Date <= endOfWeek) // Ensure correct date range
+            .Sum(e => e.Amount);
 
-            // Pass the results to the View using ViewBag
-            ViewBag.WeeklySpent = weeklySpent;
-            ViewBag.MonthlySpent = monthlySpent;
-            ViewBag.YearlySpent = yearlySpent;
+        var monthlySpent = _context.Expenses
+            .Where(e => e.Date >= startOfMonth && e.Date <= endOfMonth) // Ensure correct date range
+            .Sum(e => e.Amount);
 
-            return View();
+        var yearlySpent = _context.Expenses
+            .Where(e => e.Date >= startOfYear && e.Date <= endOfYear) // Ensure correct date range
+            .Sum(e => e.Amount);
+
+        // Passing the results to the View using ViewBag
+        ViewBag.WeeklySpent = weeklySpent;
+        ViewBag.MonthlySpent = monthlySpent;
+        ViewBag.YearlySpent = yearlySpent;
+
+     return View();
     }
+
+
+
+
 
 
     public IActionResult Privacy()

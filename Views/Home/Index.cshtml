@@ -12,31 +12,40 @@
     var userName = isAuthenticated ? UserManager.GetUserName(User) : "";
 }
 
-    <div class="col text-center">
-        <h2>Welcome @userName</h2>
-    </div>
+<div class="col text-center">
+    <h2>Welcome @userName</h2>
+</div>
 <br>
 
 @if (isAuthenticated)
 {
-    <div class="text-center">
+    <div class="text-center mb-4">
         <a asp-controller="Expense" asp-action="Create" class="btn btn-primary">Create New Expense</a>
     </div>
 
-<div class="container mt-4">
-        <h3>Spending Overview</h3>
-        <canvas id="spendingChart"></canvas>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-10">
+                <h3>Spending Overview</h3>
+                <canvas id="spendingChart" style="width: 100%;"></canvas>
+            </div>
+
+            <div class="col-md-2 text-right">
+                <a asp-controller="Expense" asp-action="Index" class="btn btn-info">
+                    View Expense List
+                </a>
+            </div>
+        </div>
     </div>
 
     <script>
-        var weeklySpent = @ViewBag.WeeklySpent;
-        var monthlySpent = @ViewBag.MonthlySpent;
-        var yearlySpent = @ViewBag.YearlySpent;
-
+        var weeklySpent = @ViewBag.weeklySpent;
+        var monthlySpent = @ViewBag.monthlySpent;
+        var yearlySpent = @ViewBag.yearlySpent;
 
         var ctx = document.getElementById('spendingChart').getContext('2d');
         var spendingChart = new Chart(ctx, {
-             type: 'bar',
+            type: 'bar',
             data: {
                 labels: ['Weekly', 'Monthly', 'Yearly'],
                 datasets: [{
@@ -60,30 +69,27 @@
                     y: {
                         beginAtZero: true,
                         ticks: {
-                    // Ensure y-axis values (numbers) are shown
-                    callback: function(value) {
-                        return '$' + value; // Format the label as currency
+                            callback: function(value) {
+                                return '$' + value;
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return 'Amount: $' + tooltipItem.raw;
+                            }
+                        }
                     }
                 }
             }
-        },
-        plugins: {
-            tooltip: {
-                callbacks: {
-                    label: function(tooltipItem) {
-                        return 'Amount: $' + tooltipItem.raw;
-                    }
-                }
-            }
-        }
-    }
-});
+        });
     </script>
-
 }
 else
 {
-
     <div class="text-center">
         <p><b>Not logged in, please log in to continue</b></p>
         <div>
@@ -92,6 +98,4 @@ else
             </form>
         </div>
     </div>
-
 }
-
